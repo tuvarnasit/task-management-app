@@ -6,7 +6,7 @@ export const actions = {
     const data = await request.formData();
     const email = data.get('email');
     const password = data.get('password');
-    console.log(email, password);
+
     const user = users.find(
       (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
     );

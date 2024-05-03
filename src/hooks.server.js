@@ -5,6 +5,7 @@ export const handle = async ({ event, resolve }) => {
   const reqPath = event.url.pathname;
   const cookies = event.cookies;
   if (!validateCookies(cookies) && reqPath.includes('/app')) {
+    event.cookies.set('user', '', { path: '/' });
     throw redirect(303, '/auth/login');
   }
 
