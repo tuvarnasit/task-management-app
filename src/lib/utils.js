@@ -43,3 +43,14 @@ export const flyAndScale = (node, params = { y: -8, x: 0, start: 0.95, duration:
     easing: cubicOut
   };
 };
+
+export function readTransitions(transitions) {
+  return {
+    inFunc: transitions.in ? transitions.in.func : () => {},
+    inOptions: transitions.in ? transitions.in.options : null,
+    outFunc: transitions.out ? transitions.out.func : () => {},
+    outOptions: transitions.out ? transitions.out.options : null
+  };
+}
+export const emailRegEx =
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
