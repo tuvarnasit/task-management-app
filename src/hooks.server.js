@@ -20,7 +20,7 @@ function validateCookies(cookies) {
   }
 
   const user = parseUserFromCookie(userCookie);
-  const userInDb = users.find((u) => JSON.stringify(u) === JSON.stringify(user));
+  const userInDb = users.find((u) => u.email === user.email);
   if (!userInDb) {
     return false;
   }
