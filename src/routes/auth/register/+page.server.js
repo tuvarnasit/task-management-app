@@ -1,10 +1,12 @@
 import { users } from '$lib/server/users.js';
 import { fail, redirect } from '@sveltejs/kit';
+import { projects } from '$lib/server/projects.js';
 
 export const actions = {
   default: async ({ cookies, request }) => {
     const data = await request.formData();
     const user = {
+      id: crypto.randomUUID(),
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
       email: data.get('email'),
@@ -16,6 +18,25 @@ export const actions = {
       });
     }
     users.push(user);
+    projects.push({
+      id: crypto.randomUUID(),
+      ownerId: user.id,
+      title: 'Първи Стъпки',
+      collaboratorIds: [],
+      sections: [
+        {
+          id: crypto.randomUUID(),
+          name: 'Задачи',
+          tasks: [
+            {
+              id: crypto.randomUUID(),
+              name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elementum ipsum. Suspendisse scelerisque bibendum purus, sit amet gravida lectus viverra id. Donec ac efficitur elit. Suspendisse porta, metus sit amet dictum elementum, neque mauris mollis urna, in fringilla velit lorem eget elit.'
+            }
+          ]
+        }
+      ]
+    });
+    cookies.set('user', JSON.stringify(user), { path: '/' });
     return redirect(303, '/app');
   }
 };

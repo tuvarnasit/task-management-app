@@ -11,13 +11,19 @@ export const actions = {
       (u) => u.email.toLowerCase() === email.toLowerCase() && u.password === password
     );
     if (!user) {
-      console.log('failed');
       return fail(401, {
         email: email,
         error: 'Неправилен имейл адрес или парола. '
       });
     }
-    cookies.set('user', JSON.stringify(user), { path: '/' });
+    const userData = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      password: user.password
+    };
+    cookies.set('user', JSON.stringify(userData), { path: '/' });
     return redirect(303, '/app');
   }
 };
