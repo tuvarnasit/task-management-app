@@ -15,7 +15,7 @@
   {builders}
   class={cn(
     buttonVariants({ variant, size, className }),
-    'transition-colors duration-300 ease-in-out '
+    'transition-colors duration-150 ease-in-out '
   )}
   type="button"
   {...$$restProps}
