@@ -1,6 +1,7 @@
-import { users } from '$lib/server/users.js';
+import { users } from '$server/users.js';
 import { fail, redirect } from '@sveltejs/kit';
-import { projects } from '$lib/server/projects.js';
+import { projects } from '$server/projects.js';
+import { createId } from '$server/cuid.js';
 
 export const actions = {
   default: async ({ cookies, request }) => {
@@ -19,17 +20,17 @@ export const actions = {
     }
     users.push(user);
     projects.push({
-      id: crypto.randomUUID(),
+      id: createId(),
       ownerId: user.id,
       title: 'Първи Стъпки',
       collaboratorIds: [],
       sections: [
         {
-          id: crypto.randomUUID(),
+          id: createId(),
           name: 'Задачи',
           tasks: [
             {
-              id: crypto.randomUUID(),
+              id: createId(),
               name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae elementum ipsum. Suspendisse scelerisque bibendum purus, sit amet gravida lectus viverra id. Donec ac efficitur elit. Suspendisse porta, metus sit amet dictum elementum, neque mauris mollis urna, in fringilla velit lorem eget elit.'
             }
           ]
