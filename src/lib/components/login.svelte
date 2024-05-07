@@ -56,10 +56,12 @@
         <p class="text-center text-sm text-destructive sm:text-left">{$page.form.error}</p>
       {/if}
     </div>
-    <Button type="submit" class="mt-2 w-full" disabled={!isValid}>Вход</Button>
+    <Button type="submit" class="mt-2 w-full disabled:cursor-not-allowed" disabled={!isValid}
+      >Вход</Button
+    >
     <Button variant="secondary" class="w-full">
       <div class="flex gap-4">
-        <i class="fab fa-google text- text- m-auto text-primary"></i>
+        <i class="fab fa-google text- text- m-auto text-foreground"></i>
         <div>Вход чрез Google</div>
       </div>
     </Button>
