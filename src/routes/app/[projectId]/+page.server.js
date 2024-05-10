@@ -18,6 +18,7 @@ export const actions = {
     const userId = JSON.parse(cookies.get('user')).id;
     const project = {
       id: createId(),
+      isFavorite: false,
       ownerId: userId,
       title: data.get('projectTitle'),
       collaboratorsIds: [],
@@ -35,5 +36,31 @@ export const actions = {
       tasks: []
     };
     project.sections.push(section);
+  },
+  deleteProject: async ({ params, request }) => {
+    const data = await request.formData();
+
+    let remove = [];
+
+    for (let i = 0; i < projects.length; i++) {
+      if (projects[i].id === params.projectId) {
+        remove.push(i);
+      }
+    }
+
+    let removed = 0;
+    for (let idx of remove) {
+      projects.splice(idx - removed, 1);
+      removed += 1;
+    }
+    console.log(projects);
+    throw redirect(302, `/app`);
+  },
+  updateProject: async ({ params, request }) => {
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+    const idx = projects.indexOf(project);
+    projects[idx].title = data.get('title');
+    projects[idx].isFavorite = data.get('addToFavorites') === 'yes';
   }
 };

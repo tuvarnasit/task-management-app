@@ -2,17 +2,27 @@
   import * as Card from '$shadcn/card/index.js';
   import * as Popover from '$shadcn/popover/index.js';
   import { Button } from '$lib/components/ui/button/index.js';
-  import { SquarePlus } from 'lucide-svelte';
+  import { ListTodo, SquarePlus } from 'lucide-svelte';
   import { Label } from '$lib/components/ui/label/index.js';
   import { Input } from '$lib/components/ui/input/index.js';
   import { page } from '$app/stores.js';
   import { enhance } from '$app/forms';
 
   export let data;
+  let isPopoverOpen = false;
 </script>
 
+<svelte:head>
+  <title>{data.project.title} | todo.bg</title>
+</svelte:head>
+
 <div class="flex flex-col gap-4 px-8 py-2">
-  <h1 class="text-xl font-bold">{data.project.title}</h1>
+  <h1 class="flex items-center gap-2 text-xl font-bold">
+    <span class="text-primary">
+      <ListTodo size={30} />
+    </span>
+    {data.project.title}
+  </h1>
   <div class="flex items-start gap-8">
     {#each data.project.sections as { id, name, tasks }}
       <Card.Root
@@ -38,7 +48,7 @@
       </Card.Root>
     {/each}
 
-    <Popover.Root portal="null">
+    <Popover.Root bind:open={isPopoverOpen} portal="null">
       <Popover.Trigger>
         <Button variant="muted" class="flex w-64 min-w-56 justify-start gap-2">
           <SquarePlus strokeWidth={1} />
@@ -46,7 +56,12 @@
         </Button>
       </Popover.Trigger>
       <Popover.Content>
-        <form action="?/createSection" method="POST" use:enhance>
+        <form
+          on:submit={() => (isPopoverOpen = false)}
+          action="?/createSection"
+          method="POST"
+          use:enhance
+        >
           <div class="grid gap-4">
             <Label for="sectionName" class="font-bold">Име на секцията</Label>
             <Input id="sectionName" name="sectionName" type="text" required />

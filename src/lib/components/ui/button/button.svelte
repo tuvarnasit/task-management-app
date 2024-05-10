@@ -6,6 +6,7 @@
   let className = undefined;
   export let variant = 'default';
   export let size = 'default';
+  export let type = 'button';
   export let builders = [];
   export let disabled = false;
   export { className as class };
@@ -17,7 +18,7 @@
     buttonVariants({ variant, size, className }),
     'transition-colors duration-150 ease-in-out '
   )}
-  type="button"
+  {type}
   {...$$restProps}
   on:click
   on:keydown

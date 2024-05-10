@@ -1,38 +1,49 @@
 <script>
-  import { enhance } from '$app/forms';
-  import { slide } from 'svelte/transition';
-  import { cubicInOut } from 'svelte/easing';
   import { fly } from 'svelte/transition';
-  import { Button, buttonVariants } from '$shadcn/button/index.js';
-  import { ScrollArea } from '$shadcn/scroll-area/index.js';
-  import * as Tooltip from '$shadcn/tooltip/index.js';
-  import * as Dialog from '$shadcn/dialog/index.js';
-  import * as Collapsible from '$shadcn/collapsible/index.js';
-  import { Plus, ChevronDown, PanelLeftClose, PanelLeftOpen, ListTodo } from 'lucide-svelte';
-  import { cn } from '$lib/utils.js';
-  import { Label } from '$lib/components/ui/label/index.js';
-  import { Input } from '$lib/components/ui/input/index.js';
+  import { Button } from '$shadcn/button/index.js';
+  import CreateProjectButton from '$components/createProjectButton.svelte';
+  import { Plus, PanelLeftClose, PanelLeftOpen } from 'lucide-svelte';
+  import DarkModeToggle from '$lib/components/darkModeToggle.svelte';
+  import { browser } from '$app/environment';
+  import ProjectsList from '$lib/components/projectsList.svelte';
 
   export let data;
   let showNav = true;
-  let isProjectsOpen = true;
-  let dialogOpen = false;
+
+  if (browser) {
+    let lastX = window.innerWidth;
+
+    function toggleNavOnResize() {
+      let x = window.innerWidth;
+
+      if (lastX <= 681 && 681 < x) {
+        showNav = true;
+      }
+      if (lastX >= 680 && 680 > x) {
+        showNav = false;
+      }
+      lastX = x;
+    }
+
+    window.addEventListener('resize', toggleNavOnResize);
+  }
 </script>
 
-<main
-  class="flex h-svh w-full
-  {showNav ? 'divide-x-[1px] divide-border' : ''}
-  bg-background"
->
+<main class="flex h-svh w-full bg-background">
   <nav
-    class="{showNav ? 'w-52 min-w-52' : 'w-0 min-w-0'}
-     absolute h-svh overflow-hidden bg-card transition-all duration-200 ease-out sm:static"
+    class="{showNav ? 'w-60 min-w-60' : 'w-0 min-w-0 border-none'}
+    absolute h-svh overflow-hidden border-r border-r-border bg-card transition-all duration-200 ease-out sm:static"
   >
     <div class="flex flex-col gap-4 p-2">
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-4">
         {#if showNav}
           <div out:fly={{ duration: 300 }} class="flex justify-end">
-            <Button on:click={() => (showNav = !showNav)} class="px-0" variant="ghost" size="icon">
+            <Button
+              on:click={() => (showNav = !showNav)}
+              variant="outline"
+              size="icon"
+              class="bg-card"
+            >
               <PanelLeftClose strokeWidth={1} size={30} />
             </Button>
           </div>
@@ -46,109 +57,24 @@
           </div>
         </Button>
       </div>
-      <Collapsible.Root class="flex w-full flex-col gap-1" bind:open={isProjectsOpen}>
-        <div>
-          <Button variant="ghost" class="mb-2 flex w-full items-center justify-between gap-2">
-            <h2 class="text-sm font-semibold text-foreground">Моите проекти</h2>
-            <Collapsible.Trigger asChild let:builder>
-              <Button
-                builders={[builder]}
-                variant="ghost"
-                class="h-6 w-6 p-0 text-primary hover:text-muted-foreground"
-              >
-                <Tooltip.Root openDelay="200">
-                  <Tooltip.Trigger>
-                    <ChevronDown
-                      tabindex="-1"
-                      class="{isProjectsOpen ? '-rotate-180' : ''}
-               h-4 w-4 transition-transform duration-300 ease-in-out"
-                    />
-                    <span class="sr-only">Toggle</span>
-                  </Tooltip.Trigger>
-                  <Tooltip.Content>
-                    {#if isProjectsOpen}
-                      Скрий списъка с проектите
-                    {:else}
-                      Покажи списъка с проектите
-                    {/if}
-                  </Tooltip.Content>
-                </Tooltip.Root>
-              </Button>
-            </Collapsible.Trigger>
-          </Button>
-          <Collapsible.Content
-            class="space-y-2"
-            transition={slide}
-            transitionConfig={{ duration: 300, easing: cubicInOut }}
-          >
-            <ScrollArea class="flex max-h-48 w-full flex-col rounded-md">
-              <div class="flex flex-col gap-0.5 pr-3">
-                {#each data.projects as project}
-                  <Button
-                    href="/app/{project.id}"
-                    variant="ghost"
-                    size="sm"
-                    class="flex w-full justify-start gap-2 overflow-ellipsis px-6"
-                  >
-                    <div class="text-primary">
-                      <ListTodo strokeWidth={2} size={18} />
-                    </div>
-                    <div>
-                      {project.title}
-                    </div>
-                  </Button>
-                {/each}
-              </div>
-            </ScrollArea>
-          </Collapsible.Content>
-          <Dialog.Root bind:open={dialogOpen}>
-            <Dialog.Trigger
-              class={cn(
-                buttonVariants({
-                  variant: 'muted',
-                  size: 'sm'
-                }),
-                'flex w-full justify-start gap-2 px-4 font-bold'
-              )}
-            >
-              <Plus strokeWidth={2} />
-              <div>Нов проект</div>
-            </Dialog.Trigger>
-            <Dialog.Content class="sm:max-w-[450px]">
-              <Dialog.Header>
-                <Dialog.Title>Създай нов проект</Dialog.Title>
-              </Dialog.Header>
-              <form
-                on:submit={() => (dialogOpen = false)}
-                action="/app/projects?/createProject"
-                method="POST"
-                use:enhance
-              >
-                <div class="grid gap-4 py-4">
-                  <div class="flex flex-col gap-3">
-                    <Label for="projectTitle" class="font-bold">Име на проекта</Label>
-                    <Input id="projectTitle" name="projectTitle" type="text" required />
-                  </div>
-                </div>
-                <Dialog.Footer class="mt-2">
-                  <Button type="submit" class="font-bold">Създай</Button>
-                </Dialog.Footer>
-              </form>
-            </Dialog.Content>
-          </Dialog.Root>
-        </div>
-      </Collapsible.Root>
+      {#if data.favoriteProjects.length > 0}
+        <ProjectsList title="Фаворити" projects={data.favoriteProjects} />
+      {/if}
+      <ProjectsList title="Моите проекти" projects={data.projects}>
+        <CreateProjectButton />
+      </ProjectsList>
     </div>
   </nav>
   <section class="w-full overflow-x-scroll p-2">
-    <div class="mb-4 h-10">
+    <div class="mb-4 flex h-10">
       {#if !showNav}
         <div transition:fly={{ duration: 110 }}>
-          <Button on:click={() => (showNav = !showNav)} variant="ghost" size="icon" class="">
+          <Button on:click={() => (showNav = !showNav)} variant="outline" size="icon" class="">
             <PanelLeftOpen strokeWidth={1} size={30} />
           </Button>
         </div>
       {/if}
+      <DarkModeToggle />
     </div>
     <slot></slot>
   </section>
