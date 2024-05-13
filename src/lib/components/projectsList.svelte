@@ -15,13 +15,13 @@
 
 <Collapsible.Root class="flex w-full flex-col gap-1" bind:open={isProjectsOpen}>
   <div>
-    <Button variant="outline" class="flex w-full items-center justify-between gap-2 bg-card">
+    <Button variant="outline" class="flex w-full items-center justify-between bg-card pr-2">
       <h2 class="text-sm font-semibold text-foreground">{title}</h2>
       <Collapsible.Trigger asChild let:builder>
         <Button
           builders={[builder]}
           variant="ghost"
-          class="h-6 w-6 p-0 text-primary hover:text-muted-foreground"
+          class="flex h-6 w-6 justify-center p-0 text-primary hover:text-muted-foreground"
         >
           <Tooltip.Root openDelay="200">
             <Tooltip.Trigger>
@@ -51,7 +51,7 @@
     >
       <ScrollArea class="flex max-h-48 flex-col rounded-md">
         <div class="flex flex-col gap-0.5">
-          {#each projects as project}
+          {#each projects as project (project.id)}
             <ProjectButton id={project.id} title={project.title} isFavorite={project.isFavorite} />
           {/each}
         </div>
