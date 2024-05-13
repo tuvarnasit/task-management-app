@@ -58,9 +58,25 @@ export const actions = {
   },
   updateProject: async ({ params, request }) => {
     const data = await request.formData();
-    const project = projects.find((p) => p.id === params.projectId);
-    const idx = projects.indexOf(project);
+    const idx = projects.findIndex((p) => p.id === params.projectId);
     projects[idx].title = data.get('title');
     projects[idx].isFavorite = data.get('addToFavorites') === 'yes';
+  },
+  createTask: async ({ params, request }) => {
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+    const section = project.sections.find((s) => s.id === data.get('sectionId'));
+    const task = {
+      id: createId(),
+      name: data.get('taskName')
+    };
+    section.tasks.push(task);
+  },
+  toggleTaskCompleted: async ({ params, request }) => {
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+    const section = project.sections.find((s) => s.id === data.get('sectionId'));
+    const idx = section.tasks.findIndex((t) => t.id === data.get('taskId'));
+    section.tasks[idx].isCompleted = !section.tasks[idx].isCompleted;
   }
 };

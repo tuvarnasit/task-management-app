@@ -29,7 +29,7 @@
   }
 </script>
 
-<main class="flex h-svh w-full bg-background">
+<main class="flex h-lvh w-full bg-background">
   <nav
     class="{showNav ? 'w-60 min-w-60' : 'w-0 min-w-0 border-none'}
     absolute h-svh overflow-hidden border-r border-r-border bg-card transition-all duration-200 ease-out sm:static"
@@ -65,8 +65,8 @@
       </ProjectsList>
     </div>
   </nav>
-  <section class="w-full overflow-x-scroll p-2">
-    <div class="mb-4 flex h-10">
+  <section class="w-full overflow-x-scroll px-6 py-2">
+    <div class="flex h-10">
       {#if !showNav}
         <div transition:fly={{ duration: 110 }}>
           <Button on:click={() => (showNav = !showNav)} variant="outline" size="icon" class="">

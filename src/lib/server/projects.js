@@ -12,7 +12,8 @@ export let projects = [
         tasks: [
           {
             id: 'zxqjm36rqj',
-            name: 'Task 1'
+            name: 'Task 1',
+            isCompleted: false
           }
         ]
       }
