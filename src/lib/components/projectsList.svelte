@@ -8,12 +8,12 @@
   import * as Collapsible from '$shadcn/collapsible/index.js';
   import * as Tooltip from '$shadcn/tooltip/index.js';
 
-  let isProjectsOpen = false;
+  export let isProjectsOpen = false;
   export let projects;
   export let title;
 </script>
 
-<Collapsible.Root class="flex w-full flex-col gap-1" bind:open={isProjectsOpen}>
+<Collapsible.Root class="flex w-full flex-col gap-1" bind:open={$isProjectsOpen}>
   <div>
     <Button variant="outline" class="flex w-full items-center justify-between bg-card pr-2">
       <h2 class="text-sm font-semibold text-foreground">{title}</h2>
@@ -28,13 +28,13 @@
               <ChevronDown
                 tabindex="-1"
                 strokeWidth={3}
-                class="{isProjectsOpen ? '-rotate-180' : ''}
-               h-4 w-4 transition-transform duration-300 ease-in-out"
+                class="{$isProjectsOpen ? '-rotate-180' : ''}
+               h-4 w-4 transition-transform duration-300 ease-in-out focus:outline-none"
               />
               <span class="sr-only">Toggle</span>
             </Tooltip.Trigger>
             <Tooltip.Content>
-              {#if isProjectsOpen}
+              {#if $isProjectsOpen}
                 Скрий списъка с проектите
               {:else}
                 Покажи списъка с проектите
