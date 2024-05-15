@@ -10,13 +10,14 @@ const buttonVariants = tv({
       outline:
         'border border-input bg-background hover:bg-accent hover:text-accent-foreground shadow-sm',
       secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm',
-      muted: 'bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80 shadow-sm',
-      ghost: 'hover:bg-accent text-foreground hover:text-accent-foreground',
+      muted: 'bg-muted text-muted-foreground hover:text-foreground/80 hover:bg-muted/80 shadow-sm',
+      ghost: 'hover:bg-accent text-foreground hover:text-foreground/80',
       text: 'hover:text-primary/90 text-primary font-bold hover:bg-accent',
       link: 'text-primary underline-offset-4 hover:underline'
     },
     size: {
       default: 'h-10 px-4 py-2',
+      xs: 'h-6 px-2',
       sm: 'h-9 rounded-md px-3',
       lg: 'h-11 rounded-md px-8',
       icon: 'h-10 w-10'

@@ -1,10 +1,13 @@
 import { projects } from '$lib/server/projects.js';
-import { error, fail, redirect } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { createId } from '$lib/server/cuid.js';
+import { users } from '$lib/server/users.js';
 
 export async function load({ params, cookies }) {
   const userId = JSON.parse(cookies.get('user')).id;
-  const project = projects.find((p) => p.ownerId === userId && p.id === params.projectId);
+  const project = projects.find(
+    (p) => (p.ownerId === userId || p.collaboratorIds.includes(userId)) && p.id === params.projectId
+  );
 
   if (!project) {
     throw error(404, 'Тази страница не съществува');
@@ -21,21 +24,11 @@ export const actions = {
       isFavorite: false,
       ownerId: userId,
       title: data.get('projectTitle'),
-      collaboratorsIds: [],
+      collaboratorIds: [],
       sections: []
     };
     projects.push(project);
     throw redirect(302, `/app/${project.id}`);
-  },
-  createSection: async ({ params, request }) => {
-    const data = await request.formData();
-    const project = projects.find((p) => p.id === params.projectId);
-    const section = {
-      id: createId(),
-      name: data.get('sectionName'),
-      tasks: []
-    };
-    project.sections.push(section);
   },
   deleteProject: async ({ params, request }) => {
     const data = await request.formData();
@@ -53,7 +46,6 @@ export const actions = {
       projects.splice(idx - removed, 1);
       removed += 1;
     }
-    console.log(projects);
     throw redirect(302, `/app`);
   },
   updateProject: async ({ params, request }) => {
@@ -61,6 +53,40 @@ export const actions = {
     const idx = projects.findIndex((p) => p.id === params.projectId);
     projects[idx].title = data.get('title');
     projects[idx].isFavorite = data.get('addToFavorites') === 'yes';
+  },
+  createSection: async ({ params, request }) => {
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+    const section = {
+      id: createId(),
+      name: data.get('sectionName'),
+      tasks: []
+    };
+    project.sections.push(section);
+  },
+  updateSection: async ({ params, request }) => {
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+    const section = project.sections.find((s) => s.id === data.get('sectionId'));
+    section.name = data.get('sectionName');
+  },
+  deleteSection: async ({ params, request }) => {
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+
+    let remove = [];
+
+    for (let i = 0; i < project.sections.length; i++) {
+      if (project.sections[i].id === data.get('sectionId')) {
+        remove.push(i);
+      }
+    }
+
+    let removed = 0;
+    for (let idx of remove) {
+      project.sections.splice(idx - removed, 1);
+      removed += 1;
+    }
   },
   createTask: async ({ params, request }) => {
     const data = await request.formData();
@@ -78,5 +104,51 @@ export const actions = {
     const section = project.sections.find((s) => s.id === data.get('sectionId'));
     const idx = section.tasks.findIndex((t) => t.id === data.get('taskId'));
     section.tasks[idx].isCompleted = !section.tasks[idx].isCompleted;
+  },
+  addCollaborator: async ({ params, request }) => {
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+
+    project.collaboratorIds.push(data.get('collaboratorId'));
+  },
+  deleteTask: async ({ params, request }) => {
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+    const section = project.sections.find((s) => s.id === data.get('sectionId'));
+
+    let remove = [];
+
+    for (let i = 0; i < section.tasks.length; i++) {
+      if (section.tasks[i].id === data.get('taskId')) {
+        remove.push(i);
+      }
+    }
+
+    let removed = 0;
+    for (let idx of remove) {
+      section.tasks.splice(idx - removed, 1);
+      removed += 1;
+    }
+  },
+  findUsersByEmail: async ({ params, request, cookies }) => {
+    const userId = JSON.parse(cookies.get('user')).id;
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+
+    const usersFound = users.filter(
+      (u) =>
+        u.email.includes(data.get('email')) &&
+        u.id !== userId &&
+        !project.collaboratorIds.includes(u.id)
+    );
+    console.log(usersFound);
+    return {
+      usersFound: usersFound.map((u) => ({
+        name: u.firstName + ' ' + u.lastName,
+        id: u.id,
+        email: u.email,
+        initials: u.firstName?.charAt(0) + u.lastName.charAt(0)
+      }))
+    };
   }
 };
