@@ -20,7 +20,9 @@
       'mt-4 flex w-full justify-start gap-2 px-4 font-bold'
     )}
   >
-    <Plus strokeWidth={2} />
+    <div>
+      <Plus strokeWidth={2} />
+    </div>
     <div>Нов проект</div>
   </Dialog.Trigger>
   <Dialog.Content class="sm:max-w-[450px]">
