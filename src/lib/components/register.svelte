@@ -37,19 +37,19 @@
   </div>
   <div class="grid gap-4">
     <div class="grid gap-2">
-      <Label for="regName" class="text-foreground">Име</Label>
+      <Label for="firstName" class="text-foreground">Име</Label>
       <Input
         autocapitalize
         bind:value={formData.name}
-        id="name"
-        name="name"
+        id="firstName"
+        name="firstName"
         type="text"
         placeholder="Иван"
         required
       />
     </div>
     <div class="grid gap-2">
-      <Label for="regLastName" class="text-foreground">Фамилия</Label>
+      <Label for="lastName" class="text-foreground">Фамилия</Label>
       <Input
         bind:value={formData.lastName}
         id="lastName"
@@ -74,7 +74,7 @@
       <Label for="password" class="text-foreground">Парола</Label>
       <Input
         bind:value={formData.password}
-        id="regPassword"
+        id="password"
         name="password"
         type="password"
         required
