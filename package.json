@@ -34,6 +34,7 @@
     "clsx": "^2.1.1",
     "lucide-svelte": "^0.378.0",
     "mode-watcher": "^0.3.0",
+    "svelte-dnd-action": "^0.9.45",
     "svelte-radix": "^1.1.0",
     "svelte-sonner": "^0.3.24",
     "tailwind-merge": "^2.3.0",

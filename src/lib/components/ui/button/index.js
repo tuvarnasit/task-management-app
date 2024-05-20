@@ -11,7 +11,7 @@ const buttonVariants = tv({
         'border border-input bg-background hover:bg-accent hover:text-accent-foreground shadow-sm',
       secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm',
       muted: 'bg-muted text-muted-foreground hover:text-foreground/80 hover:bg-muted/80 shadow-sm',
-      ghost: 'hover:bg-accent text-foreground hover:text-foreground/80',
+      ghost: 'hover:bg-accent text-foreground',
       text: 'hover:text-primary/90 text-primary font-bold hover:bg-accent',
       link: 'text-primary underline-offset-4 hover:underline'
     },
