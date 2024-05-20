@@ -19,6 +19,7 @@ export async function load({ cookies }) {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      password: user.password,
       name: user.firstName + ' ' + user.lastName,
       initials: user.firstName.charAt(0) + user.lastName.charAt(0)
     },
