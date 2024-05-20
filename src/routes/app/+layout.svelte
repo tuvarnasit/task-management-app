@@ -14,7 +14,7 @@
   } from '$stores/projectsExpandedStore.js';
 
   export let data;
-  let showNav = true;
+  let showNav = browser && window.innerWidth >= 680 ? true : false;
 
   if (browser) {
     let lastX = window.innerWidth;
@@ -33,9 +33,10 @@
 
     window.addEventListener('resize', toggleNavOnResize);
   }
+  let navOpenButton;
 </script>
 
-<main class="flex h-lvh w-full bg-background">
+<main class="flex h-svh w-full bg-background">
   <nav
     class="{showNav ? 'w-60 min-w-60' : 'w-0 min-w-0 border-none'}
     absolute z-50 h-svh overflow-hidden border-r border-r-border bg-card transition-all duration-200 ease-out sm:static"
@@ -43,7 +44,7 @@
     <div class="flex flex-col gap-4 p-2">
       <div class="flex flex-col gap-4">
         <div class="flex justify-start gap-2">
-          <AccountButton user={data.user}></AccountButton>
+          <AccountButton user={data.user} />
           {#if showNav}
             <div out:fly={{ duration: 300 }}>
               <Button
@@ -87,10 +88,19 @@
       {/if}
     </div>
   </nav>
-  <section class="w-full overflow-x-scroll px-6 py-2">
+  <section
+    role="presentation"
+    class="flex w-full flex-col overflow-x-hidden px-6 py-2"
+    on:click={(event) => {
+      if (!navOpenButton) return;
+      if (!navOpenButton.contains(event.target) && showNav && browser && window.innerWidth <= 680) {
+        showNav = false;
+      }
+    }}
+  >
     <div class="flex h-10">
       {#if !showNav}
-        <div transition:fly={{ duration: 110 }}>
+        <div transition:fly={{ duration: 110 }} bind:this={navOpenButton}>
           <Button on:click={() => (showNav = !showNav)} variant="outline" size="icon" class="">
             <PanelLeftOpen strokeWidth={1} size={30} />
           </Button>
