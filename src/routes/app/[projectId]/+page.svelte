@@ -12,6 +12,8 @@
   import ProjectDropdown from '$components/projectDropdown.svelte';
   import { dndzone } from 'svelte-dnd-action';
   import SectionCard from '$components/sectionCard.svelte';
+  import { flip } from 'svelte/animate';
+  import {  expoInOut } from 'svelte/easing';
 
   export let data;
   export let form;
@@ -147,25 +149,27 @@
     </div>
   </div>
   <div
-    class="flex flex-wrap items-start justify-center gap-4 overflow-visible overflow-x-scroll p-2 pb-8 sm:flex-nowrap sm:justify-start"
+    class="flex flex-wrap items-start justify-center gap-12 p-2 pb-8 sm:flex-nowrap sm:justify-start sm:gap-4 sm:!overflow-auto sm:overflow-x-scroll"
   >
     <div
-      class="flex flex-wrap items-start justify-center gap-4 sm:flex-nowrap sm:justify-start"
+      class="flex flex-wrap items-start justify-center gap-8 sm:flex-nowrap sm:justify-start sm:gap-4"
       use:dndzone={{ items: data.project.sections, type: 'section', dropTargetStyle: '' }}
       on:finalize={handleSectionFinalize}
       on:consider={handleSectionConsider}
     >
       {#each data.project.sections as { id, name, tasks }, idx (id)}
-        <SectionCard
-          {id}
-          {name}
-          {tasks}
-          {isTaskPopoversOpen}
-          onDrop={(newTasks) => handleItemFinalize(idx, newTasks)}
-        />
+        <div animate:flip={{ duration: 150, easing: expoInOut }}>
+          <SectionCard
+            {id}
+            {name}
+            {tasks}
+            {isTaskPopoversOpen}
+            onDrop={(newTasks) => handleItemFinalize(idx, newTasks)}
+          />
+        </div>
       {/each}
     </div>
-    <Popover.Root bind:open={isSectionPopoverOpen} portal="null">
+    <Popover.Root bind:open={isSectionPopoverOpen}>
       <Popover.Trigger>
         <Button variant="muted" class="flex w-full min-w-56 justify-start gap-2 sm:w-72">
           <SquarePlus strokeWidth={1} />

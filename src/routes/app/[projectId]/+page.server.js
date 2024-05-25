@@ -98,6 +98,28 @@ export const actions = {
     };
     section.tasks.push(task);
   },
+  appendTaskToProject: async ({ params, request }) => {
+    const data = await request.formData();
+
+    const project = projects.find((p) => p.id === params.projectId);
+    if (project.sections.length == 0 || !project.sections.find((s) => s.name === '(Без име)')) {
+      project.sections.push({
+        id: createId(),
+        name: '(Без име)',
+        tasks: []
+      });
+    }
+
+    project.sections
+      .find((s) => s.name === '(Без име)')
+      .tasks.push({
+        id: createId(),
+        name: data.get('taskName'),
+        isCompleted: false
+      });
+
+    throw redirect(302, `/app/${project.id}`);
+  },
   toggleTaskCompleted: async ({ params, request }) => {
     const data = await request.formData();
     const project = projects.find((p) => p.id === params.projectId);
