@@ -1,8 +1,8 @@
 <script>
   import * as DropdownMenu from '$shadcn/dropdown-menu/index.js';
-  import { Button } from '$shadcn/button/index.js';
   import * as Avatar from '$shadcn/avatar/index.js';
-  import { ChevronDown, LogOut, UserCog } from 'lucide-svelte';
+  import { Button } from '$shadcn/button/index.js';
+  import { ChevronDown, Home, LogOut, UserCog } from 'lucide-svelte';
   let isDropdownOpen = false;
 
   export let user;
@@ -42,15 +42,29 @@
           <div>Моят профил</div>
         </Button>
       </DropdownMenu.Item>
+      <DropdownMenu.Item>
+        <Button
+          href="/home"
+          class="flex w-full items-center justify-start gap-2"
+          variant="ghost"
+          size="xs"
+        >
+          <div class="text-muted-foreground">
+            <Home strokeWidth={2} size={18} />
+          </div>
+          <div>Начало</div>
+        </Button>
+      </DropdownMenu.Item>
       <DropdownMenu.Separator />
       <DropdownMenu.Item>
         <Button
           href="/auth/logout"
           class="flex w-full items-center justify-start gap-2 text-destructive hover:text-destructive/80"
+          data-sveltekit-preload-data="off"
           variant="ghost"
           size="xs"
         >
-          <div class="">
+          <div>
             <LogOut strokeWidth={2} size={18} />
           </div>
           <div>Изход</div>
