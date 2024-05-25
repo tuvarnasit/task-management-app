@@ -1,9 +1,9 @@
 <script>
   import { toast } from 'svelte-sonner';
   import { Pencil, Trash2 } from 'lucide-svelte';
-  import { Button } from '$lib/components/ui/button/index.js';
-  import { Label } from '$lib/components/ui/label/index.js';
-  import { Input } from '$lib/components/ui/input/index.js';
+  import { Button } from '$shadcn/button/index.js';
+  import { Label } from '$shadcn/label/index.js';
+  import { Input } from '$shadcn/input/index.js';
   import { enhance } from '$app/forms';
   import * as DropdownMenu from '$shadcn/dropdown-menu/index.js';
   import * as AlertDialog from '$shadcn/alert-dialog/index.js';

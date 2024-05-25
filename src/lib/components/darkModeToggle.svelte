@@ -1,7 +1,7 @@
 <script>
   import { toggleMode } from 'mode-watcher';
   import { Moon, Sun } from 'lucide-svelte';
-  import { Button } from '$lib/components/ui/button/index.js';
+  import { Button } from '$shadcn/button/index.js';
 </script>
 
 <div class="flex w-full justify-end">

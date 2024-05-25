@@ -3,7 +3,7 @@
   import { Button } from '$shadcn/button/index.js';
   import { Check } from 'lucide-svelte';
   import * as Card from '$shadcn/card/index.js';
-  import DeleteTaskButton from '$lib/components/deleteTaskButton.svelte';
+  import DeleteTaskButton from '$components/deleteTaskButton.svelte';
   import { enhance } from '$app/forms';
 
   export let sectionId;

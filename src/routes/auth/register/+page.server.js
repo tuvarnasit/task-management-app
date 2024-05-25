@@ -37,7 +37,7 @@ export const actions = {
         }
       ]
     });
-    cookies.set('user', JSON.stringify(user), { path: '/' });
+    cookies.set('user', JSON.stringify(user), {secure: false, path: '/' });
     return redirect(303, '/app');
   }
 };

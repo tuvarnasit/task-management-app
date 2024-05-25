@@ -1,16 +1,17 @@
 <script>
   import { slide } from 'svelte/transition';
   import { cubicInOut } from 'svelte/easing';
-  import { ScrollArea } from '$lib/components/ui/scroll-area/index.js';
+  import { ScrollArea } from '$shadcn/scroll-area/index.js';
   import { ChevronDown } from 'lucide-svelte';
-  import ProjectButton from '$lib/components/projectButton.svelte';
-  import { Button } from '$lib/components/ui/button/index.js';
+  import ProjectButton from '$components/projectButton.svelte';
+  import { Button } from '$components/ui/button/index.js';
   import * as Collapsible from '$shadcn/collapsible/index.js';
   import * as Tooltip from '$shadcn/tooltip/index.js';
 
   export let isProjectsOpen = false;
   export let projects;
   export let title;
+  export let handleClick;
 </script>
 
 <Collapsible.Root class="flex w-full flex-col gap-1" bind:open={$isProjectsOpen}>
@@ -52,7 +53,12 @@
       <ScrollArea class="flex max-h-48 flex-col rounded-md">
         <div class="flex flex-col gap-0.5">
           {#each projects as project (project.id)}
-            <ProjectButton id={project.id} title={project.title} isFavorite={project.isFavorite} />
+            <ProjectButton
+              {handleClick}
+              id={project.id}
+              title={project.title}
+              isFavorite={project.isFavorite}
+            />
           {/each}
         </div>
       </ScrollArea>

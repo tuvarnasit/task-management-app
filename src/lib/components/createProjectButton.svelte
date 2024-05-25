@@ -1,10 +1,10 @@
 <script>
   import { cn } from '$lib/utils.js';
-  import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
   import { Plus } from 'lucide-svelte';
   import { Label } from '$shadcn/label/index.js';
   import { Input } from '$shadcn/input/index.js';
   import * as Dialog from '$shadcn/dialog/index.js';
+  import { Button, buttonVariants } from '$shadcn/button/index.js';
   import { enhance } from '$app/forms';
 
   let dialogOpen = false;

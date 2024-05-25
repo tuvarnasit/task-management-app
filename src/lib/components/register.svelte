@@ -3,7 +3,7 @@
   import { Input } from '$shadcn/input/index.js';
   import { Button } from '$shadcn/button/index.js';
   import { emailRegEx } from '$lib/utils.js';
-  import { registerDataStore } from '$lib/stores/registerDataStore.js';
+  import { registerDataStore } from '$stores/registerDataStore.js';
   import { enhance } from '$app/forms';
   import { page } from '$app/stores';
 

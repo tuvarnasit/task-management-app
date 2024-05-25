@@ -1,7 +1,7 @@
 <script>
   import * as AlertDialog from '$shadcn/alert-dialog/index.js';
+  import { Button } from '$shadcn/button/index.js';
   import { toast } from 'svelte-sonner';
-  import { Button } from '$lib/components/ui/button/index.js';
   import { Trash2 } from 'lucide-svelte';
   import { enhance } from '$app/forms.js';
 

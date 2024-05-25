@@ -1,20 +1,23 @@
 <script>
-  import { fly } from 'svelte/transition';
+  import { fly, slide } from 'svelte/transition';
   import { Button } from '$shadcn/button/index.js';
-  import { Plus, PanelLeftClose, PanelLeftOpen } from 'lucide-svelte';
+  import { PanelLeftClose, PanelLeftOpen } from 'lucide-svelte';
   import { browser } from '$app/environment';
   import CreateProjectButton from '$components/createProjectButton.svelte';
   import DarkModeToggle from '$components/darkModeToggle.svelte';
   import ProjectsList from '$components/projectsList.svelte';
   import AccountButton from '$components/accountButton.svelte';
+  import CreateTaskButton from '$lib/components/createTaskButton.svelte';
   import {
     favoritesExpanded,
     projectsExpanded,
     sharedExpanded
   } from '$stores/projectsExpandedStore.js';
+  import { expoInOut } from 'svelte/easing';
 
   export let data;
-  let showNav = browser && window.innerWidth >= 680 ? true : false;
+  const SM_WIDTH_THRESHOLD = 680;
+  let showNav = browser && window.innerWidth >= SM_WIDTH_THRESHOLD ? true : false;
 
   if (browser) {
     let lastX = window.innerWidth;
@@ -22,10 +25,10 @@
     const toggleNavOnResize = () => {
       let x = window.innerWidth;
 
-      if (lastX <= 681 && 681 < x) {
+      if (lastX <= SM_WIDTH_THRESHOLD + 1 && SM_WIDTH_THRESHOLD + 1 < x) {
         showNav = true;
       }
-      if (lastX >= 680 && 680 > x) {
+      if (lastX >= SM_WIDTH_THRESHOLD && SM_WIDTH_THRESHOLD > x) {
         showNav = false;
       }
       lastX = x;
@@ -34,6 +37,12 @@
     window.addEventListener('resize', toggleNavOnResize);
   }
   let navOpenButton;
+
+  function handleNavCloseOnSmallScreens() {
+    if (browser && window.innerWidth <= SM_WIDTH_THRESHOLD) {
+      showNav = false;
+    }
+  }
 </script>
 
 <main class="flex h-svh w-full bg-background">
@@ -58,24 +67,23 @@
             </div>
           {/if}
         </div>
-        <Button variant="default" class="flex w-full items-center justify-start gap-2 font-bold ">
-          <div class="rounded-full bg-primary-foreground text-primary">
-            <Plus strokeWidth={2} />
-          </div>
-          <div>Нова задача</div>
-        </Button>
+        <CreateTaskButton projects={data.projects} />
       </div>
       {#if data.favoriteProjects.length > 0}
-        <ProjectsList
-          title="Фаворити"
-          projects={data.favoriteProjects}
-          isProjectsOpen={favoritesExpanded}
-        />
+        <div transition:slide={{ easing: expoInOut, duration: 300 }}>
+          <ProjectsList
+            title="Фаворити"
+            projects={data.favoriteProjects}
+            isProjectsOpen={favoritesExpanded}
+            handleClick={handleNavCloseOnSmallScreens}
+          />
+        </div>
       {/if}
       <ProjectsList
         title="Моите проекти"
         projects={data.projects}
         isProjectsOpen={projectsExpanded}
+        handleClick={handleNavCloseOnSmallScreens}
       >
         <CreateProjectButton />
       </ProjectsList>
@@ -84,6 +92,7 @@
           title="Споделени с мен"
           projects={data.sharedProjects}
           isProjectsOpen={sharedExpanded}
+          handleClick={handleNavCloseOnSmallScreens}
         />
       {/if}
     </div>

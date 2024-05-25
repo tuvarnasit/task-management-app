@@ -1,10 +1,10 @@
 <script>
-  import TaskCard from '$lib/components/taskCard.svelte';
-  import { ScrollArea } from '$lib/components/ui/scroll-area/index.js';
-  import { Button } from '$lib/components/ui/button/index.js';
+  import TaskCard from '$components/taskCard.svelte';
+  import { ScrollArea } from '$shadcn/scroll-area/index.js';
+  import { Button } from '$shadcn/button/index.js';
   import { Label } from '$lib/components/ui/label/index.js';
-  import SectionDropdown from '$lib/components/sectionDropdown.svelte';
-  import { Textarea } from '$lib/components/ui/textarea/index.js';
+  import SectionDropdown from '$components/sectionDropdown.svelte';
+  import { Textarea } from '$shadcn/textarea/index.js';
   import { EllipsisVertical } from 'lucide-svelte';
   import * as Card from '$shadcn/card/index.js';
   import * as DropdownMenu from '$shadcn/dropdown-menu/index.js';
@@ -12,6 +12,8 @@
   import { dndzone, SHADOW_ITEM_MARKER_PROPERTY_NAME } from 'svelte-dnd-action';
   import { enhance } from '$app/forms';
   import TaskPlaceholder from '$components/taskPlaceholder.svelte';
+  import { expoInOut } from 'svelte/easing';
+  import { flip } from 'svelte/animate';
 
   export let id;
   export let name;
@@ -31,11 +33,13 @@
 <Card.Root
   class="max-h-full w-full min-w-64 border-none bg-background shadow-none ring-border ring-offset-background transition-shadow duration-150 ease-in-out hover:ring-1 hover:ring-offset-2 sm:w-72"
 >
-  <Card.Header class="group px-3 py-3 pt-2">
-    <Card.Title tag="h2" class="text-md flex items-center gap-2"
-      >{name}
-      <div class="flex-1 align-bottom text-sm text-muted-foreground/70">
-        {tasks.filter((t) => !t.isCompleted).length}
+  <Card.Header class="group px-3 py-3 pt-2 ">
+    <Card.Title tag="h2" class="text-md flex items-center">
+      <div class="flex flex-1 items-center gap-2">
+        {name}
+        <div class="flex-1 align-bottom text-sm text-muted-foreground/70">
+          {tasks.filter((t) => !t.isCompleted).length}
+        </div>
       </div>
       <SectionDropdown {id} {name}>
         <DropdownMenu.Trigger class="text-muted-foreground ">
@@ -51,7 +55,7 @@
     </Card.Title>
   </Card.Header>
   <ScrollArea class="flex max-h-[63lvh] flex-col rounded-md">
-    <Card.Content class="flex flex-col px-3">
+    <Card.Content class="flex flex-col px-3 ">
       <div
         class="flex flex-col pt-4"
         use:dndzone={{ items: tasks, dropTargetStyle: '' }}
@@ -59,7 +63,7 @@
         on:consider={handleConsider}
       >
         {#each tasks.filter((t) => !t.isCompleted) as task (task.id)}
-          <div class="relative mb-2">
+          <div class="relative mb-2" animate:flip={{ duration: 150, easing: expoInOut }}>
             <TaskCard {task} sectionId={id} />
             {#if task[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
               <TaskPlaceholder taskName={task.name} />
