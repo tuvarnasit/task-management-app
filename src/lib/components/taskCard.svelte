@@ -10,7 +10,7 @@
   export let task;
 </script>
 
-<Card.Root tag="h3" class="bg-background py-3 text-sm">
+<Card.Root tag="h3" class="group/card bg-background py-3 text-sm">
   <Card.Content
     class="flex gap-2 px-3 {task.isCompleted ? 'text-muted-foreground line-through' : ''}"
   >
@@ -50,7 +50,7 @@
     <div class="flex-1">
       {task.name}
     </div>
-    <div>
+    <div class="opacity-0 transition duration-150 ease-in-out group-hover/card:opacity-100">
       <DeleteTaskButton taskId={task.id} {sectionId} name={task.name} />
     </div>
   </Card.Content>

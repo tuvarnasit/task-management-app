@@ -16,12 +16,21 @@
 
 <Collapsible.Root class="flex w-full flex-col gap-1" bind:open={$isProjectsOpen}>
   <div>
-    <Button variant="outline" class="flex w-full items-center justify-between bg-card pr-2">
+    <Button
+      href="/app/projects"
+      variant="outline"
+      class="flex w-full items-center justify-between bg-card pr-2"
+    >
       <h2 class="text-sm font-semibold text-foreground">{title}</h2>
       <Collapsible.Trigger asChild let:builder>
         <Button
           builders={[builder]}
           variant="ghost"
+          on:click={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+          }}
+          type="button"
           class="flex h-6 w-6 justify-center p-0 text-primary hover:text-muted-foreground"
         >
           <Tooltip.Root openDelay="200">

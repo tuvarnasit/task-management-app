@@ -13,7 +13,7 @@
   import { dndzone } from 'svelte-dnd-action';
   import SectionCard from '$components/sectionCard.svelte';
   import { flip } from 'svelte/animate';
-  import {  expoInOut } from 'svelte/easing';
+  import { expoInOut } from 'svelte/easing';
 
   export let data;
   export let form;
@@ -22,7 +22,9 @@
   data.project.sections.forEach((s) => {
     isTaskPopoversOpen[s.id] = false;
   });
-  let updateTitle = data.project.title;
+  $: memo = data.project.title;
+  $: updateTitle = memo;
+
   let userSearch = '';
   let updateIsFavorite = data.project.isFavorite ? 'yes' : 'no';
 

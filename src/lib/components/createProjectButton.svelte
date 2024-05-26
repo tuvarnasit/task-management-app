@@ -31,7 +31,7 @@
     </Dialog.Header>
     <form
       on:submit={() => (dialogOpen = false)}
-      action="/app/projects?/createProject"
+      action="/app/test?/createProject"
       method="POST"
       use:enhance
     >
