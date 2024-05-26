@@ -10,12 +10,20 @@
   import * as Popover from '$lib/components/ui/popover/index.js';
   import { cn } from '$lib/utils.js';
   import { enhance } from '$app/forms';
+  import { tick } from 'svelte';
 
   export let projects;
   let comboboxOpen = false;
   let dialogOpen = false;
   let value = projects[0]?.id ?? '';
   $: selectedValue = projects.find((p) => p.id === value)?.title ?? 'Избери проект...';
+
+  function closeAndFocusTrigger(triggerId) {
+    comboboxOpen = false;
+    tick().then(() => {
+      document.getElementById(triggerId)?.focus();
+    });
+  }
 </script>
 
 <Dialog.Root bind:open={dialogOpen}>
@@ -45,7 +53,7 @@
         </div>
         <div class="flex flex-col gap-3">
           <Label for="project" class="font-bold">Избери проект</Label>
-          <Popover.Root bind:open={comboboxOpen}>
+          <Popover.Root bind:open={comboboxOpen} let:ids>
             <Popover.Trigger asChild let:builder>
               <Button
                 builders={[builder]}
@@ -68,7 +76,7 @@
                       value={project.id}
                       onSelect={(currentValue) => {
                         value = currentValue;
-                        // closeAndFocusTrigger(ids.trigger);
+                        closeAndFocusTrigger(ids.trigger);
                       }}
                     >
                       <Check

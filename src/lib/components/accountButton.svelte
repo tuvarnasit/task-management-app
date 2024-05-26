@@ -3,7 +3,7 @@
   import * as Avatar from '$shadcn/avatar/index.js';
   import { Button } from '$shadcn/button/index.js';
   import { ChevronDown, Home, LogOut, UserCog } from 'lucide-svelte';
-  let isDropdownOpen = false;
+  export let isDropdownOpen = false;
 
   export let user;
 </script>

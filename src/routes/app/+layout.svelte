@@ -18,6 +18,7 @@
   export let data;
   const SM_WIDTH_THRESHOLD = 680;
   let showNav = browser && window.innerWidth >= SM_WIDTH_THRESHOLD ? true : false;
+  let isDropdownOpen = false;
 
   if (browser) {
     let lastX = window.innerWidth;
@@ -29,6 +30,7 @@
         showNav = true;
       }
       if (lastX >= SM_WIDTH_THRESHOLD && SM_WIDTH_THRESHOLD > x) {
+        isDropdownOpen = false;
         showNav = false;
       }
       lastX = x;
@@ -53,7 +55,7 @@
     <div class="flex flex-col gap-4 p-2">
       <div class="flex flex-col gap-4">
         <div class="flex justify-start gap-2">
-          <AccountButton user={data.user} />
+          <AccountButton user={data.user} {isDropdownOpen} />
           {#if showNav}
             <div out:fly={{ duration: 300 }}>
               <Button
