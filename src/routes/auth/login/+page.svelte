@@ -3,6 +3,6 @@
 </script>
 
 <svelte:head>
-  <title>Вход</title>
+  <title>Вход | todo.bg</title>
 </svelte:head>
 <Login />

@@ -1,7 +1,7 @@
 <script>
   import { Input } from '$shadcn/input/index.js';
   import { Separator } from '$shadcn/separator/index.js';
-  import { EllipsisVertical, ListTodo } from 'lucide-svelte';
+  import { ListTodo } from 'lucide-svelte';
   import { Button } from '$lib/components/ui/button/index.js';
   import ProjectDropdown from '$lib/components/projectDropdown.svelte';
   export let data;

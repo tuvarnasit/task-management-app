@@ -3,6 +3,6 @@
 </script>
 
 <svelte:head>
-  <title>Регистрация</title>
+  <title>Регистрация | todo.bg</title>
 </svelte:head>
 <Register />
