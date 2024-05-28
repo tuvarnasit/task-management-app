@@ -26,7 +26,7 @@
 </header>
 <main class="h-[2000px] px-4">
   <div class="flex flex-col items-center justify-center gap-8">
-    <img src={heroImg} alt="hero" class="sm:h-[400px]" />
+    <img src={heroImg} alt="hero" class="dark:mix-blend-difference sm:h-[400px]" />
     <h1 class="text-balance text-center text-4xl font-bold text-foreground">
       <span class="text-primary">todo.bg</span>
       - Организирай деня си с лекота!
@@ -38,7 +38,7 @@
     <Button size="lg" class="text-lg font-bold" href="/app">Започни сега</Button>
   </div>
 </main>
-<footer class="h-48 w-full">
+<footer class="w-full bg-card">
   <Separator />
   <div class="flex flex-col gap-12 px-32 pb-8 pt-12">
     <div class="flex flex-col gap-6">

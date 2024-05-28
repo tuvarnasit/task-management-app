@@ -25,23 +25,25 @@
       </h3>
       <Separator />
     </div>
-    {#each foundProjects as { id, title } (id)}
-      <div>
-        <Button
-          href="/app/{id}"
-          variant="ghost"
-          size="lg"
-          class="group flex w-60 w-full items-center justify-between gap-2 px-4"
-        >
-          <div class="text-primary">
-            <ListTodo strokeWidth={2} size={22} />
-          </div>
-          <div class="flex-grow overflow-hidden overflow-ellipsis">
-            {title}
-          </div>
-        </Button>
-      </div>
-    {/each}
+    <div class="flex flex-col gap-2">
+      {#each foundProjects as { id, title } (id)}
+        <div>
+          <Button
+            href="/app/{id}"
+            variant="ghost"
+            size="lg"
+            class="group flex w-full items-center justify-between gap-2 px-4"
+          >
+            <div class="text-primary">
+              <ListTodo strokeWidth={2} size={22} />
+            </div>
+            <div class="flex-grow overflow-hidden overflow-ellipsis">
+              {title}
+            </div>
+          </Button>
+        </div>
+      {/each}
+    </div>
     <div class="flex flex-col gap-1">
       <h3 class="font-bold">
         {foundSharedProjects.length}

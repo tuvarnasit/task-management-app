@@ -34,7 +34,7 @@
       alt="banner"
       width="1920"
       height="1080"
-      class="h-full w-full object-contain mix-blend-multiply"
+      class="h-full w-full object-contain dark:mix-blend-difference"
     />
   </section>
 </main>
