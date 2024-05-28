@@ -7,7 +7,7 @@ export const actions = {
   default: async ({ cookies, request }) => {
     const data = await request.formData();
     const user = {
-      id: crypto.randomUUID(),
+      id: createId(),
       firstName: data.get('firstName'),
       lastName: data.get('lastName'),
       email: data.get('email'),
@@ -37,7 +37,9 @@ export const actions = {
         }
       ]
     });
-    cookies.set('user', JSON.stringify(user), {secure: false, path: '/' });
+    cookies.set('user', JSON.stringify(user), { secure: false, path: '/' });
+    console.log(users);
+    console.log(JSON.stringify(projects));
     return redirect(303, '/app');
   }
 };
