@@ -163,7 +163,6 @@ export const actions = {
         u.id !== userId &&
         !project.collaboratorIds.includes(u.id)
     );
-    console.log(usersFound);
     return {
       usersFound: usersFound.map((u) => ({
         name: u.firstName + ' ' + u.lastName,

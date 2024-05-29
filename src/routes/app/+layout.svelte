@@ -20,7 +20,6 @@
   let showNav = browser && window.innerWidth >= SM_WIDTH_THRESHOLD ? true : false;
   let isDropdownOpen = false;
 
-  $: console.log(data);
   if (browser) {
     let lastX = window.innerWidth;
 
