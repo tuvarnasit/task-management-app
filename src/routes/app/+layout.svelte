@@ -20,6 +20,7 @@
   let showNav = browser && window.innerWidth >= SM_WIDTH_THRESHOLD ? true : false;
   let isDropdownOpen = false;
 
+  $: console.log(data);
   if (browser) {
     let lastX = window.innerWidth;
 
@@ -86,9 +87,7 @@
         projects={data.projects}
         isProjectsOpen={projectsExpanded}
         handleClick={handleNavCloseOnSmallScreens}
-      >
-        <CreateProjectButton />
-      </ProjectsList>
+      ></ProjectsList>
       {#if data.sharedProjects.length > 0}
         <ProjectsList
           title="Споделени с мен"
@@ -97,6 +96,7 @@
           handleClick={handleNavCloseOnSmallScreens}
         />
       {/if}
+      <CreateProjectButton />
     </div>
   </nav>
   <section

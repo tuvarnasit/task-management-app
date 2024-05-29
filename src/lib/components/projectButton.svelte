@@ -16,12 +16,12 @@
   on:click={handleClick}
   variant={$page.params.projectId === id ? 'secondary' : 'ghost'}
   size="sm"
-  class="group flex w-full items-center justify-between gap-2 pl-4"
+  class="group flex w-56 items-center justify-between gap-2 pl-4"
 >
   <div class="text-primary">
     <ListTodo strokeWidth={2} size={18} />
   </div>
-  <div class="flex-grow overflow-hidden overflow-ellipsis">
+  <div class="flex-1 overflow-hidden overflow-ellipsis">
     {title}
   </div>
   <ProjectDropdown {id} {title} {isFavorite}>

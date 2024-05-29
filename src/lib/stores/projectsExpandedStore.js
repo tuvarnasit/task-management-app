@@ -28,7 +28,7 @@ favoritesExpanded.subscribe((value) => {
 });
 
 function createStore(value) {
-  let { subscribe, set, update } = writable(browser ? localStorage.getItem(value) || false : false);
+  let { subscribe, set, update } = writable(browser ? localStorage.getItem(value) || true : false);
 
   return {
     subscribe,

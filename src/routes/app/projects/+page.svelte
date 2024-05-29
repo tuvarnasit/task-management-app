@@ -55,11 +55,11 @@
       <Button
         href="/app/{id}"
         variant="ghost"
-        size="sm"
-        class="group flex w-60 items-center justify-between gap-2 px-4"
+        size="lg"
+        class="group flex w-full items-center justify-between gap-2 px-4"
       >
         <div class="text-primary">
-          <ListTodo strokeWidth={2} size={18} />
+          <ListTodo strokeWidth={2} size={22} />
         </div>
         <div class="flex-grow overflow-hidden overflow-ellipsis">
           {title}

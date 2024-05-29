@@ -17,7 +17,7 @@
         variant: 'muted',
         size: 'sm'
       }),
-      'mt-4 flex w-full justify-start gap-2 px-4 font-bold'
+      'flex w-full justify-start gap-2 px-4 font-bold'
     )}
   >
     <div>

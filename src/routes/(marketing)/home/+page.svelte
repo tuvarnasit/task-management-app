@@ -79,7 +79,7 @@
   </nav>
   <Separator />
 </header>
-<main class="h-[2000px] px-4">
+<main class="px-4">
   <div class="flex flex-col items-center justify-center gap-8">
     <img src={heroImg} alt="hero" class="dark:mix-blend-difference sm:h-[400px]" />
     <h1 class="text-balance text-center text-4xl font-bold text-foreground">
@@ -106,13 +106,17 @@
         {#each testimonials as { avatar, name, message }, i (i)}
           <Carousel.Item class="flex max-w-sm">
             <Card.Root class="self-stretch bg-background p-2">
-              <Card.Header class="flex flex-row items-end gap-3">
-                <Avatar.Root class="size-8 ring-2 ring-primary">
-                  <Avatar.Image src={avatar} />
-                </Avatar.Root>
-                {name}
+              <Card.Header class="flex flex-col">
+                <div class="flex flex-row items-end gap-3">
+                  <Avatar.Root
+                    class="size-8 ring-2 ring-primary ring-offset-1 ring-offset-background"
+                  >
+                    <Avatar.Image src={avatar} />
+                  </Avatar.Root>
+                  {name}
+                </div>
               </Card.Header>
-              <Card.Content class="flex items-center justify-center">
+              <Card.Content class="">
                 <span class="text-balance text-lg text-muted-foreground">"{message}"</span>
               </Card.Content>
             </Card.Root>
