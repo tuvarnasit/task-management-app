@@ -9,7 +9,8 @@ export let projects = [
       {
         id: 'gqg66kzizt',
         name: 'Задачи',
-        tasks: [{ id: 'zxqjm36rqj', name: 'Task 1', isCompleted: false }]
+        tasks: [{ id: 'zxqjm36rqj', name: 'Task 1' }],
+        completedTasks: []
       }
     ]
   },
@@ -23,6 +24,7 @@ export let projects = [
       {
         id: 'gqg66kzizt',
         name: 'Домакински задължения',
+        completedTasks: [],
         tasks: [
           { id: 'd4nmppat45', name: 'Измий съдовете' },
           {
@@ -35,6 +37,7 @@ export let projects = [
       {
         id: 'gdwf34h49f',
         name: 'Improvement ✨',
+        completedTasks: [],
         tasks: [
           { id: 'izauv11pzl', name: 'Направи тренировка във фитнеса' },
           {
@@ -59,6 +62,7 @@ export let projects = [
       {
         id: 'a9e767bsfh',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'zplycpp8h6',
@@ -77,6 +81,7 @@ export let projects = [
       {
         id: 'ma92syiog5',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'dhp53cdl6r',
@@ -95,6 +100,7 @@ export let projects = [
       {
         id: 's3j5z6csd3',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'l0grcr01ms',
@@ -113,6 +119,7 @@ export let projects = [
       {
         id: 'p0evyc8bgs',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'sddyz8dkab',
@@ -131,6 +138,7 @@ export let projects = [
       {
         id: 'tnnd6cgefw',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'idjnazd4mq',
@@ -149,6 +157,7 @@ export let projects = [
       {
         id: 'yzkr08qjmc',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'db01lbshrj',
@@ -167,6 +176,7 @@ export let projects = [
       {
         id: 'axotjqapu1',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'gjrrsrzx8m',
@@ -185,6 +195,7 @@ export let projects = [
       {
         id: 'y2jw43451q',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'ictxbmk0dc',
@@ -203,6 +214,7 @@ export let projects = [
       {
         id: 'vxn21cpnnc',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'xjet77sqik',
@@ -221,6 +233,7 @@ export let projects = [
       {
         id: 'mpayiw3cdh',
         name: 'Задачи',
+        completedTasks: [],
         tasks: [
           {
             id: 'p93zufrtda',

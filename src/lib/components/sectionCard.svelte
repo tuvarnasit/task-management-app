@@ -18,6 +18,7 @@
   export let id;
   export let name;
   export let tasks;
+  export let completedTasks;
   export let isTaskPopoversOpen;
   export let onDrop;
 
@@ -38,7 +39,7 @@
       <div class="flex flex-1 items-center gap-2">
         {name}
         <div class="flex-1 align-bottom text-sm text-muted-foreground/70">
-          {tasks.filter((t) => !t.isCompleted).length}
+          {tasks.length}
         </div>
       </div>
       <SectionDropdown {id} {name}>
@@ -62,18 +63,18 @@
         on:finalize={handleFinalize}
         on:consider={handleConsider}
       >
-        {#each tasks.filter((t) => !t.isCompleted) as task (task.id)}
+        {#each tasks as task (task.id)}
           <div class="relative mb-2" animate:flip={{ duration: 150, easing: expoInOut }}>
-            <TaskCard {task} sectionId={id} />
+            <TaskCard {task} isCompleted={false} sectionId={id} />
             {#if task[SHADOW_ITEM_MARKER_PROPERTY_NAME]}
               <TaskPlaceholder taskName={task.name} />
             {/if}
           </div>
         {/each}
       </div>
-      {#each tasks.filter((t) => t.isCompleted) as task (task.id)}
+      {#each completedTasks as task (task.id)}
         <div class="mb-2">
-          <TaskCard {task} sectionId={id} />
+          <TaskCard {task} isCompleted={true} sectionId={id} />
         </div>
       {/each}
     </Card.Content>

@@ -7,26 +7,25 @@
   import { enhance } from '$app/forms';
 
   export let sectionId;
+  export let isCompleted;
   export let task;
 </script>
 
 <Card.Root tag="h3" class="group/card bg-background py-3 text-sm">
-  <Card.Content
-    class="flex gap-2 px-3 {task.isCompleted ? 'text-muted-foreground line-through' : ''}"
-  >
+  <Card.Content class="flex gap-2 px-3 {isCompleted ? 'text-muted-foreground line-through' : ''}">
     <form
-      action="?/toggleTaskCompleted"
+      action="?/{isCompleted ? 'undoCompleteTask' : 'completeTask'}"
       method="POST"
       use:enhance
       on:submit={() => {
-        if (!task.isCompleted) {
+        if (!isCompleted) {
           toast.success('1 Изпълнена задача');
         }
       }}
     >
       <input type="text" hidden name="taskId" value={task.id} />
       <input type="text" hidden name="sectionId" value={sectionId} />
-      {#if !task.isCompleted}
+      {#if !isCompleted}
         <Button
           variant="ghost"
           class="group flex size-5 items-center justify-center rounded-full border border-border p-[3px] hover:border-primary"

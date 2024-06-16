@@ -60,7 +60,8 @@ export const actions = {
     const section = {
       id: createId(),
       name: data.get('sectionName'),
-      tasks: []
+      tasks: [],
+      completedTasks: []
     };
     project.sections.push(section);
   },
@@ -114,18 +115,54 @@ export const actions = {
       .find((s) => s.name === '(Без име)')
       .tasks.push({
         id: createId(),
-        name: data.get('taskName'),
-        isCompleted: false
+        name: data.get('taskName')
       });
 
     throw redirect(302, `/app/${project.id}`);
   },
-  toggleTaskCompleted: async ({ params, request }) => {
+  completeTask: async ({ params, request }) => {
     const data = await request.formData();
     const project = projects.find((p) => p.id === params.projectId);
     const section = project.sections.find((s) => s.id === data.get('sectionId'));
     const idx = section.tasks.findIndex((t) => t.id === data.get('taskId'));
-    section.tasks[idx].isCompleted = !section.tasks[idx].isCompleted;
+    const task = section.tasks[idx];
+    let remove = [];
+
+    for (let i = 0; i < section.tasks.length; i++) {
+      if (section.tasks[i].id === data.get('taskId')) {
+        remove.push(i);
+      }
+    }
+
+    let removed = 0;
+    for (let idx of remove) {
+      section.tasks.splice(idx - removed, 1);
+      removed += 1;
+    }
+
+    section.completedTasks.push(task);
+  },
+  undoCompleteTask: async ({ params, request }) => {
+    const data = await request.formData();
+    const project = projects.find((p) => p.id === params.projectId);
+    const section = project.sections.find((s) => s.id === data.get('sectionId'));
+    const idx = section.completedTasks.findIndex((t) => t.id === data.get('taskId'));
+    const task = section.completedTasks[idx];
+    let remove = [];
+
+    for (let i = 0; i < section.completedTasks.length; i++) {
+      if (section.completedTasks[i].id === data.get('taskId')) {
+        remove.push(i);
+      }
+    }
+
+    let removed = 0;
+    for (let idx of remove) {
+      section.completedTasks.splice(idx - removed, 1);
+      removed += 1;
+    }
+
+    section.tasks.push(task);
   },
   addCollaborator: async ({ params, request }) => {
     const data = await request.formData();
@@ -149,6 +186,20 @@ export const actions = {
     let removed = 0;
     for (let idx of remove) {
       section.tasks.splice(idx - removed, 1);
+      removed += 1;
+    }
+
+    remove = [];
+
+    for (let i = 0; i < section.completedTasks.length; i++) {
+      if (section.completedTasks[i].id === data.get('taskId')) {
+        remove.push(i);
+      }
+    }
+
+    removed = 0;
+    for (let idx of remove) {
+      section.completedTasks.splice(idx - removed, 1);
       removed += 1;
     }
   },

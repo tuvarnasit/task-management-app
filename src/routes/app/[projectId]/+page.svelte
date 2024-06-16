@@ -14,6 +14,7 @@
   import SectionCard from '$components/sectionCard.svelte';
   import { flip } from 'svelte/animate';
   import { expoInOut } from 'svelte/easing';
+  import { tick } from 'svelte';
 
   export let data;
   export let form;
@@ -159,12 +160,13 @@
       on:finalize={handleSectionFinalize}
       on:consider={handleSectionConsider}
     >
-      {#each data.project.sections as { id, name, tasks }, idx (id)}
-        <div animate:flip={{ duration: 150, easing: expoInOut }}>
+      {#each data.project.sections as { id, name, tasks, completedTasks }, idx (id)}
+        <div class="flex-1" animate:flip={{ duration: 150, easing: expoInOut }}>
           <SectionCard
             {id}
             {name}
             {tasks}
+            {completedTasks}
             {isTaskPopoversOpen}
             onDrop={(newTasks) => handleItemFinalize(idx, newTasks)}
           />
@@ -173,7 +175,7 @@
     </div>
     <Popover.Root bind:open={isSectionPopoverOpen}>
       <Popover.Trigger>
-        <Button variant="muted" class="flex w-full min-w-56 justify-start gap-2 sm:w-72">
+        <Button variant="muted" class="flex w-full min-w-56 justify-start gap-2 sm:max-w-72">
           <SquarePlus strokeWidth={1} />
           <div>Добави секция</div>
         </Button>
